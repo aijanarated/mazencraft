@@ -52,7 +52,7 @@ scene.add(sunlight);
 // test block
 
 createWorld();
-
+createPlayer();
 // animation
 
 function animate(){
