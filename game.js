@@ -61,20 +61,32 @@ function createWorld(){
 
     // ground
 
-    for(let x=-10;x<=10;x++){
+   for(let x=-10;x<=10;x++){
 
-        for(let z=-10;z<=10;z++){
+    for(let z=-10;z<=10;z++){
+
+        let height = Math.floor(
+            Math.sin(x * 0.5) +
+            Math.cos(z * 0.5)
+        );
+
+
+        for(let y=0;y<=height;y++){
 
             createBlock(
                 x,
-                0,
+                y,
                 z,
-                0x55aa33
+                y === height
+                ? 0x55aa33
+                : 0x8b5a2b
             );
 
         }
 
     }
+
+}
 
 
     // trees
