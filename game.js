@@ -6,11 +6,12 @@ let renderer;
 function createBlock(x,y,z,color){
 
     let block = new THREE.Mesh(
-        new THREE.BoxGeometry(1,1,1),
-        new THREE.MeshLambertMaterial({
-            color: color
-        })
-    );
+    new THREE.BoxGeometry(1,1,1),
+    new THREE.MeshStandardMaterial({
+        color: color,
+        roughness: 0.9
+    })
+);
 
     block.position.set(x,y,z);
 
