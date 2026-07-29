@@ -1,6 +1,57 @@
-let scene;
-let camera;
-let renderer;
+let scene, camera, renderer;
+
+
+function createBlock(x, y, z, color, size=1){
+
+    let block = new THREE.Mesh(
+        new THREE.BoxGeometry(size,size,size),
+        new THREE.MeshLambertMaterial({
+            color: color
+        })
+    );
+
+    block.position.set(x,y,z);
+    scene.add(block);
+
+    return block;
+}
+
+
+function createTree(x,z){
+
+    // trunk
+    for(let y=0;y<3;y++){
+        createBlock(
+            x,
+            y,
+            z,
+            0x7a4b22
+        );
+    }
+
+
+    // leaves
+    for(let a=-1;a<=1;a++){
+        for(let b=-1;b<=1;b++){
+
+            createBlock(
+                x+a,
+                3,
+                z+b,
+                0x2f8f3a
+            );
+
+        }
+    }
+
+    createBlock(
+        x,
+        4,
+        z,
+        0x2f8f3a
+    );
+}
+
 
 
 function createWorld(){
@@ -8,21 +59,25 @@ function createWorld(){
 scene = new THREE.Scene();
 
 
-// cinematic sky
-scene.background = new THREE.Color(0xff8c66);
+// sky
+scene.background = new THREE.Color(
+    0xffb36b
+);
 
 
+// camera
 camera = new THREE.PerspectiveCamera(
 70,
-window.innerWidth / window.innerHeight,
+window.innerWidth/window.innerHeight,
 0.1,
 1000
 );
 
 
+
 renderer = new THREE.WebGLRenderer({
-canvas: document.getElementById("world"),
-antialias:true
+    canvas: document.getElementById("world"),
+    antialias:true
 });
 
 
@@ -32,77 +87,51 @@ window.innerHeight
 );
 
 
-// lighting
+// light
 
-let light = new THREE.DirectionalLight(
-0xffddaa,
+let sun = new THREE.DirectionalLight(
+0xffe0aa,
 2
 );
 
-light.position.set(5,10,5);
-
-scene.add(light);
-
-
-
-// terrain
-
-let ground = new THREE.Mesh(
-
-new THREE.BoxGeometry(
-40,
-2,
-40
-),
-
-new THREE.MeshLambertMaterial({
-color:0x355c2a
-})
-
+sun.position.set(
+10,
+20,
+5
 );
 
-
-ground.position.y=-2;
-
-scene.add(ground);
+scene.add(sun);
 
 
+// ground blocks
 
-// mountains
+for(let x=-10;x<=10;x++){
 
-for(let i=0;i<5;i++){
+    for(let z=-10;z<=10;z++){
 
-let mountain = new THREE.Mesh(
+        createBlock(
+            x,
+            -1,
+            z,
+            0x4f8f32
+        );
 
-new THREE.ConeGeometry(
-5,
-12,
-6
-),
-
-new THREE.MeshLambertMaterial({
-color:0x303c35
-})
-
-);
-
-
-mountain.position.set(
-(i-2)*8,
-3,
--15
-);
-
-
-scene.add(mountain);
-
+    }
 }
+
+
+// trees
+
+createTree(-5,-4);
+createTree(5,-5);
+createTree(-7,3);
+createTree(7,4);
 
 
 
 camera.position.set(
 0,
-5,
+3,
 12
 );
 
