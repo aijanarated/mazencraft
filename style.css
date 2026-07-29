@@ -36,8 +36,8 @@ html,body{
 
 h1{
     color:white;
-    font-size:72px;
-
+    font-size:110px;
+    
     text-shadow:
     5px 5px #333,
     0 0 25px rgba(255,255,255,.25);
@@ -47,7 +47,7 @@ h1{
 
 p{
     color:#ffe38a;
-    font-size:18px;
+    font-size:28px;
     margin-bottom:50px;
 }
 
@@ -57,15 +57,15 @@ button{
 
     font-family:'Press Start 2P', monospace;
 
-    width:320px;
-    height:70px;
+   width:400px;
+   height:90px;
 
     border:none;
 
     cursor:pointer;
 
-    font-size:22px;
-
+    font-size:28px;
+    
     background:#6ab04c;
 
     color:white;
