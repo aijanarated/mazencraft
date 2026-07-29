@@ -1,72 +1,134 @@
-let scene, camera, renderer;
+let scene;
+let camera;
+let renderer;
+
+let blocks = [];
 
 
-function createBlock(x, y, z, color, size=1){
+function createBlock(x,y,z,texture){
 
-    let block = new THREE.Mesh(
-        new THREE.BoxGeometry(size,size,size),
-        new THREE.MeshLambertMaterial({
-            color: color
-        })
+    let material = new THREE.MeshLambertMaterial({
+        color: texture
+    });
+
+
+    let cube = new THREE.Mesh(
+        new THREE.BoxGeometry(1,1,1),
+        material
     );
 
-    block.position.set(x,y,z);
-    scene.add(block);
 
-    return block;
+    cube.position.set(
+        x,
+        y,
+        z
+    );
+
+
+    scene.add(cube);
+
+    blocks.push(cube);
+
 }
 
 
+
+// create minecraft-style terrain
+
+function createTerrain(){
+
+    for(let x=-10;x<=10;x++){
+
+        for(let z=-10;z<=10;z++){
+
+
+            let height =
+            Math.floor(
+                Math.random()*2
+            );
+
+
+            // dirt layers
+
+            for(let y=0;y<=height;y++){
+
+                createBlock(
+                    x,
+                    y,
+                    z,
+                    y===height
+                    ? 0x55aa33 // grass
+                    : 0x8b5a2b // dirt
+                );
+
+            }
+
+        }
+
+    }
+
+}
+
+
+
+// trees
+
 function createTree(x,z){
 
-    // trunk
-    for(let y=0;y<3;y++){
+
+    // wood
+
+    for(let y=3;y<7;y++){
+
         createBlock(
             x,
             y,
             z,
-            0x7a4b22
+            0x7a4a22
         );
+
     }
 
 
     // leaves
+
     for(let a=-1;a<=1;a++){
+
         for(let b=-1;b<=1;b++){
 
             createBlock(
                 x+a,
-                3,
+                7,
                 z+b,
                 0x2f8f3a
             );
 
         }
+
     }
 
-    createBlock(
-        x,
-        4,
-        z,
-        0x2f8f3a
-    );
+
 }
 
 
 
 function createWorld(){
 
+
 scene = new THREE.Scene();
 
 
-// sky
-scene.background = new THREE.Color(
-    0xffb36b
+// Minecraft-like sky
+
+scene.background =
+new THREE.Color(
+0x87ceeb
 );
 
 
-// camera
-camera = new THREE.PerspectiveCamera(
+
+camera =
+new THREE.PerspectiveCamera(
 70,
 window.innerWidth/window.innerHeight,
 0.1,
@@ -75,9 +137,10 @@ window.innerWidth/window.innerHeight,
 
 
 
-renderer = new THREE.WebGLRenderer({
-    canvas: document.getElementById("world"),
-    antialias:true
+renderer =
+new THREE.WebGLRenderer({
+canvas:
+document.getElementById("world")
 });
 
 
@@ -87,52 +150,37 @@ window.innerHeight
 );
 
 
+
 // light
 
-let sun = new THREE.DirectionalLight(
-0xffe0aa,
+let sun =
+new THREE.DirectionalLight(
+0xffffff,
 2
 );
 
 sun.position.set(
 10,
 20,
-5
+10
 );
 
 scene.add(sun);
 
 
-// ground blocks
 
-for(let x=-10;x<=10;x++){
+createTerrain();
 
-    for(let z=-10;z<=10;z++){
-
-        createBlock(
-            x,
-            -1,
-            z,
-            0x4f8f32
-        );
-
-    }
-}
-
-
-// trees
-
-createTree(-5,-4);
+createTree(-5,-3);
 createTree(5,-5);
-createTree(-7,3);
-createTree(7,4);
+createTree(0,4);
 
 
 
 camera.position.set(
 0,
-3,
-12
+8,
+15
 );
 
 
@@ -146,6 +194,7 @@ animate();
 function animate(){
 
 requestAnimationFrame(animate);
+
 
 renderer.render(
 scene,
