@@ -25,14 +25,36 @@ function createWorld(){
             let height = 0;
 
 
-            // make a visible hill in the middle
-
             if(
                 x > -3 && x < 3 &&
                 z > -3 && z < 3
             ){
                 height = 3;
             }
+
+
+            // lake area
+
+            let isWater =
+                x > 6 &&
+                x < 10 &&
+                z > -3 &&
+                z < 3;
+
+
+            if(isWater){
+
+                createBlock(
+                    x,
+                    0,
+                    z,
+                    0x3399ff
+                );
+
+                continue;
+
+            }
+
 
 
             for(let y = -2; y <= height; y++){
@@ -48,6 +70,7 @@ function createWorld(){
                     );
 
                 }
+
                 else if(y >= -1){
 
                     createBlock(
@@ -58,6 +81,7 @@ function createWorld(){
                     );
 
                 }
+
                 else{
 
                     createBlock(
