@@ -5,8 +5,6 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x87ceeb);
 
 
-// camera
-
 const camera = new THREE.PerspectiveCamera(
     75,
     window.innerWidth / window.innerHeight,
@@ -14,26 +12,17 @@ const camera = new THREE.PerspectiveCamera(
     1000
 );
 
-camera.position.set(
-    0,
-    5,
-    10
-);
-
-
-// renderer
 
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas
 });
+
 
 renderer.setSize(
     window.innerWidth,
     window.innerHeight
 );
 
-
-// light
 
 const sunlight = new THREE.DirectionalLight(
     0xffffff,
@@ -49,15 +38,16 @@ sunlight.position.set(
 scene.add(sunlight);
 
 
-// test block
-
 createWorld();
+
 createPlayer();
-// animation
+
 
 function animate(){
 
     requestAnimationFrame(animate);
+
+    updatePlayer();
 
     renderer.render(
         scene,
@@ -65,5 +55,6 @@ function animate(){
     );
 
 }
+
 
 animate();
