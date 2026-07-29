@@ -65,40 +65,17 @@ function createWorld(){
 
     for(let z=-10;z<=10;z++){
 
-        let height = Math.floor(
-    Math.sin(x * 0.5) +
-    Math.cos(z * 0.5) + 6
-);
-
-
-        for(let y=0;y<=height;y++){
-
-            let blockColor;
-
-
-            if(y === height){
-                blockColor = 0x55aa33; // grass
-            }
-            else if(y >= height - 4){
-                blockColor = 0x8b5a2b; // dirt
-            }
-            else{
-                blockColor = 0x777777; // stone
-            }
-
-
-            createBlock(
-                x,
-                y,
-                z,
-                blockColor
-            );
-
-        }
+        createBlock(
+            x,
+            0,
+            z,
+            0x55aa33
+        );
 
     }
 
 }
+
 
     // trees
 
