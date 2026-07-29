@@ -77,7 +77,6 @@ function createTerrain(){
 
 // trees
 
-
 function createTree(x,z){
 
     // trunk
