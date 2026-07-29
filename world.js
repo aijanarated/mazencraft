@@ -25,18 +25,13 @@ function createWorld(){
 
         for(let z = -10; z <= 10; z++){
 
-
-            // stone layer
-
             createBlock(
                 x,
-                -2,
+                0,
                 z,
-                0x777777
+                0x55aa33
             );
 
-
-            // dirt layers
 
             createBlock(
                 x,
@@ -48,11 +43,10 @@ function createWorld(){
 
             createBlock(
                 x,
-                0,
+                -2,
                 z,
-                0x55aa33
+                0x777777
             );
-
 
         }
 
@@ -69,9 +63,6 @@ function createWorld(){
 
 function createTree(x,z){
 
-
-    // trunk
-
     for(let y = 1; y <= 3; y++){
 
         createBlock(
@@ -83,9 +74,6 @@ function createTree(x,z){
 
     }
 
-
-
-    // leaves
 
     for(let y = 3; y <= 5; y++){
 
