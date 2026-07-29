@@ -191,6 +191,19 @@ window.innerWidth/window.innerHeight,
 
 
 
+camera.position.set(
+0,
+6,
+12
+);
+
+camera.lookAt(
+0,
+0,
+0
+);
+
+
 renderer =
 new THREE.WebGLRenderer({
 canvas:
