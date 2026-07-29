@@ -244,28 +244,16 @@ createTree(0,4);
 
 
 
-controls = new THREE.PointerLockControls(
-camera,
-document.body
-);
-
-
-document.addEventListener(
-"click",
-function(){
-    controls.lock();
-});
-
-
-scene.add(
-controls.getObject()
-);
-
-
-controls.getObject().position.set(
+camera.position.set(
 0,
-5,
-10
+6,
+12
+);
+
+camera.lookAt(
+0,
+0,
+0
 );
 
 
