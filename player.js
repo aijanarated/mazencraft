@@ -7,22 +7,20 @@ function createPlayer(){
         document.body
     );
 
-
     scene.add(
         controls.getObject()
     );
 
-
-   controls.getObject().position.set(
-    0,
-    3,
-    10
-);
+    controls.getObject().position.set(
+        0,
+        3,
+        10
+    );
 
 
     document.addEventListener(
         "click",
-        function(){
+        () => {
             controls.lock();
         }
     );
