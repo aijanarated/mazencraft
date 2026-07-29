@@ -253,13 +253,32 @@ function animate(){
 requestAnimationFrame(animate);
 
 
+let speed = 0.15;
+
+
+if(controls){
+
+    if(moveForward)
+        controls.moveForward(speed);
+
+    if(moveBackward)
+        controls.moveForward(-speed);
+
+    if(moveLeft)
+        controls.moveRight(-speed);
+
+    if(moveRight)
+        controls.moveRight(speed);
+
+}
+
+
 renderer.render(
 scene,
 camera
 );
 
 }
-
 
 
 createWorld();
