@@ -32,6 +32,44 @@ function createWorld(){
 
         }
 
+   }
+createTree(-5,-5);
+createTree(5,3);
+createTree(0,-7)
+    
+}
+
+function createTree(x,z){
+
+    for(let y=1; y<=3; y++){
+
+        createBlock(
+            x,
+            y,
+            z,
+            0x8b5a2b
+        );
+
+    }
+
+
+    for(let y=3; y<=5; y++){
+
+        for(let a=-1; a<=1; a++){
+
+            for(let b=-1; b<=1; b++){
+
+                createBlock(
+                    x+a,
+                    y,
+                    z+b,
+                    0x2f8f3a
+                );
+
+            }
+
+        }
+
     }
 
 }
