@@ -13,11 +13,11 @@ function createPlayer(){
     );
 
 
-    controls.getObject().position.set(
-        0,
-        2,
-        5
-    );
+   controls.getObject().position.set(
+    0,
+    3,
+    10
+);
 
 
     document.addEventListener(
