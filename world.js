@@ -14,7 +14,9 @@ function createBlock(x, y, z, color){
     );
 
     scene.add(block);
+
 }
+
 
 
 function createWorld(){
@@ -23,6 +25,27 @@ function createWorld(){
 
         for(let z = -10; z <= 10; z++){
 
+
+            // stone layer
+
+            createBlock(
+                x,
+                -2,
+                z,
+                0x777777
+            );
+
+
+            // dirt layers
+
+            createBlock(
+                x,
+                -1,
+                z,
+                0x8b5a2b
+            );
+
+
             createBlock(
                 x,
                 0,
@@ -30,18 +53,26 @@ function createWorld(){
                 0x55aa33
             );
 
+
         }
 
-   }
-createTree(-5,-5);
-createTree(5,3);
-createTree(0,-7)
-    
+    }
+
+
+    createTree(-5,-5);
+    createTree(5,3);
+    createTree(0,-7);
+
 }
+
+
 
 function createTree(x,z){
 
-    for(let y=1; y<=3; y++){
+
+    // trunk
+
+    for(let y = 1; y <= 3; y++){
 
         createBlock(
             x,
@@ -53,11 +84,14 @@ function createTree(x,z){
     }
 
 
-    for(let y=3; y<=5; y++){
 
-        for(let a=-1; a<=1; a++){
+    // leaves
 
-            for(let b=-1; b<=1; b++){
+    for(let y = 3; y <= 5; y++){
+
+        for(let a = -1; a <= 1; a++){
+
+            for(let b = -1; b <= 1; b++){
 
                 createBlock(
                     x+a,
