@@ -25,28 +25,47 @@ function createWorld(){
 
         for(let z = -10; z <= 10; z++){
 
-            createBlock(
-                x,
-                0,
-                z,
-                0x55aa33
+
+            let height = Math.floor(
+                Math.random() * 3
             );
 
 
-            createBlock(
-                x,
-                -1,
-                z,
-                0x8b5a2b
-            );
+            for(let y = -2; y <= height; y++){
 
 
-            createBlock(
-                x,
-                -2,
-                z,
-                0x777777
-            );
+                if(y === height){
+
+                    createBlock(
+                        x,
+                        y,
+                        z,
+                        0x55aa33
+                    );
+
+                }
+                else if(y > -2){
+
+                    createBlock(
+                        x,
+                        y,
+                        z,
+                        0x8b5a2b
+                    );
+
+                }
+                else{
+
+                    createBlock(
+                        x,
+                        y,
+                        z,
+                        0x777777
+                    );
+
+                }
+
+            }
 
         }
 
@@ -62,6 +81,7 @@ function createWorld(){
 
 
 function createTree(x,z){
+
 
     for(let y = 1; y <= 3; y++){
 
