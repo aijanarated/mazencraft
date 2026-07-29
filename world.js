@@ -7,11 +7,7 @@ function createBlock(x, y, z, color){
         })
     );
 
-    block.position.set(
-        x,
-        y,
-        z
-    );
+    block.position.set(x,y,z);
 
     scene.add(block);
 
@@ -26,9 +22,17 @@ function createWorld(){
         for(let z = -10; z <= 10; z++){
 
 
-            let height = Math.floor(
-                Math.random() * 3
-            );
+            let height = 0;
+
+
+            // make a visible hill in the middle
+
+            if(
+                x > -3 && x < 3 &&
+                z > -3 && z < 3
+            ){
+                height = 3;
+            }
 
 
             for(let y = -2; y <= height; y++){
@@ -44,7 +48,7 @@ function createWorld(){
                     );
 
                 }
-                else if(y > -2){
+                else if(y >= -1){
 
                     createBlock(
                         x,
@@ -81,7 +85,6 @@ function createWorld(){
 
 
 function createTree(x,z){
-
 
     for(let y = 1; y <= 3; y++){
 
