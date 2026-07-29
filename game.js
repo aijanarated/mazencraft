@@ -13,6 +13,13 @@ const camera = new THREE.PerspectiveCamera(
 );
 
 
+camera.position.set(
+    0,
+    5,
+    10
+);
+
+
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas
 });
@@ -47,7 +54,9 @@ function animate(){
 
     requestAnimationFrame(animate);
 
-    updatePlayer();
+    if(typeof updatePlayer === "function"){
+        updatePlayer();
+    }
 
     renderer.render(
         scene,
