@@ -51,21 +51,7 @@ scene.add(sunlight);
 
 // test block
 
-const block = new THREE.Mesh(
-    new THREE.BoxGeometry(1,1,1),
-    new THREE.MeshLambertMaterial({
-        color:0x55aa33
-    })
-);
-
-block.position.set(
-    0,
-    0,
-    0
-);
-
-scene.add(block);
-
+createWorld();
 
 // animation
 
