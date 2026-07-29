@@ -1,1 +1,83 @@
+const canvas = document.getElementById("game");
 
+const scene = new THREE.Scene();
+
+scene.background = new THREE.Color(0x87ceeb);
+
+
+// camera
+
+const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+);
+
+camera.position.set(
+    0,
+    5,
+    10
+);
+
+
+// renderer
+
+const renderer = new THREE.WebGLRenderer({
+    canvas: canvas
+});
+
+renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+);
+
+
+// light
+
+const sunlight = new THREE.DirectionalLight(
+    0xffffff,
+    2
+);
+
+sunlight.position.set(
+    10,
+    20,
+    10
+);
+
+scene.add(sunlight);
+
+
+// test block
+
+const block = new THREE.Mesh(
+    new THREE.BoxGeometry(1,1,1),
+    new THREE.MeshLambertMaterial({
+        color:0x55aa33
+    })
+);
+
+block.position.set(
+    0,
+    0,
+    0
+);
+
+scene.add(block);
+
+
+// animation
+
+function animate(){
+
+    requestAnimationFrame(animate);
+
+    renderer.render(
+        scene,
+        camera
+    );
+
+}
+
+animate();
