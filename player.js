@@ -1,9 +1,12 @@
+
 let controls;
 
 let moveForward = false;
 let moveBackward = false;
 let moveLeft = false;
 let moveRight = false;
+
+let velocity = new THREE.Vector3();
 
 
 function createPlayer(){
@@ -72,5 +75,25 @@ function createPlayer(){
 
         }
     );
+
+}
+
+
+function updatePlayer(){
+
+    let speed = 0.1;
+
+
+    if(moveForward)
+        controls.moveForward(speed);
+
+    if(moveBackward)
+        controls.moveForward(-speed);
+
+    if(moveLeft)
+        controls.moveRight(-speed);
+
+    if(moveRight)
+        controls.moveRight(speed);
 
 }
