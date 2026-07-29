@@ -37,18 +37,17 @@ function createBlock(x,y,z,texture){
 
 function createTerrain(){
 
-    for(let x=-10;x<=10;x++){
+    for(let x=-12;x<=12;x++){
 
-        for(let z=-10;z<=10;z++){
-
+        for(let z=-12;z<=12;z++){
 
             let height =
             Math.floor(
-                Math.random()*2
+                Math.sin(x*0.5) +
+                Math.cos(z*0.5) +
+                2
             );
 
-
-            // dirt layers
 
             for(let y=0;y<=height;y++){
 
@@ -57,8 +56,8 @@ function createTerrain(){
                     y,
                     z,
                     y===height
-                    ? 0x55aa33 // grass
-                    : 0x8b5a2b // dirt
+                    ? 0x55aa33
+                    : 0x8b5a2b
                 );
 
             }
@@ -68,7 +67,6 @@ function createTerrain(){
     }
 
 }
-
 
 
 // trees
