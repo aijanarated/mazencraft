@@ -33,8 +33,6 @@ function createWorld(){
             }
 
 
-            // lake area
-
             let isWater =
                 x > 6 &&
                 x < 10 &&
@@ -56,9 +54,7 @@ function createWorld(){
             }
 
 
-
             for(let y = -2; y <= height; y++){
-
 
                 if(y === height){
 
@@ -96,6 +92,20 @@ function createWorld(){
             }
 
         }
+
+    }
+
+
+    // birthday path
+
+    for(let z = -10; z <= 5; z++){
+
+        createBlock(
+            0,
+            1,
+            z,
+            0xc2b280
+        );
 
     }
 
