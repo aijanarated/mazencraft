@@ -79,10 +79,8 @@ function createTerrain(){
 
 function createTree(x,z){
 
-
-    // wood
-
-    for(let y=3;y<7;y++){
+    // trunk
+    for(let y=0;y<4;y++){
 
         createBlock(
             x,
@@ -92,6 +90,58 @@ function createTree(x,z){
         );
 
     }
+
+
+    // lower leaves
+    for(let a=-2;a<=2;a++){
+
+        for(let b=-2;b<=2;b++){
+
+            if(
+                Math.abs(a)+Math.abs(b)<4
+            ){
+
+                createBlock(
+                    x+a,
+                    4,
+                    z+b,
+                    0x2f8f3a
+                );
+
+            }
+
+        }
+
+    }
+
+
+    // upper leaves
+    for(let a=-1;a<=1;a++){
+
+        for(let b=-1;b<=1;b++){
+
+            createBlock(
+                x+a,
+                5,
+                z+b,
+                0x3aa34a
+            );
+
+        }
+
+    }
+
+
+    // top leaf
+
+    createBlock(
+        x,
+        6,
+        z,
+        0x3aa34a
+    );
+
+}
 
 
     // leaves
