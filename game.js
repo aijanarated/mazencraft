@@ -66,9 +66,9 @@ function createWorld(){
     for(let z=-10;z<=10;z++){
 
         let height = Math.floor(
-            Math.sin(x * 0.5) +
-            Math.cos(z * 0.5) + 3
-        );
+    Math.sin(x * 0.5) +
+    Math.cos(z * 0.5) + 6
+);
 
 
         for(let y=0;y<=height;y++){
@@ -79,7 +79,7 @@ function createWorld(){
             if(y === height){
                 blockColor = 0x55aa33; // grass
             }
-            else if(y >= height - 2){
+            else if(y >= height - 4){
                 blockColor = 0x8b5a2b; // dirt
             }
             else{
