@@ -30,7 +30,6 @@ function createWorld(){
 
             let height = 0;
 
-
             if(
                 x > -3 && x < 3 &&
                 z > -3 && z < 3
@@ -52,7 +51,7 @@ function createWorld(){
                         grassTexture
                     );
 
-                }
+                } 
                 else if(y >= -1){
 
                     createBlock(
@@ -62,8 +61,8 @@ function createWorld(){
                         dirtTexture
                     );
 
-                }
-                else{
+                } 
+                else {
 
                     createBlock(
                         x,
@@ -91,8 +90,6 @@ function createWorld(){
 
 function createTree(x,z){
 
-    // trunk
-
     for(let y = 1; y <= 3; y++){
 
         createBlock(
@@ -104,8 +101,6 @@ function createTree(x,z){
 
     }
 
-
-    // leaves
 
     for(let y = 3; y <= 5; y++){
 
