@@ -1,61 +1,82 @@
-body {
-    margin: 0;
-    overflow: hidden;
-    background: #000;
-    font-family: Arial, sans-serif;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-
-div {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-
-    transform: translate(-50%, -50%);
-
-    text-align: center;
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:'Press Start 2P', monospace;
+    background:#000;
 }
 
+#game{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    display:block;
+}
 
-p {
-    color: white;
+#menu{
+    position:fixed;
+    inset:0;
 
-    font-size: 60px;
-    font-weight: bold;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
 
-    margin-bottom: 40px;
+    pointer-events:none;
 
+    z-index:100;
+}
+
+h1{
+    color:white;
+    font-size:85px;
+    
     text-shadow:
-        4px 4px 0 #555,
-        8px 8px 0 #222;
+    5px 5px #333,
+    0 0 25px rgba(255,255,255,.25);
+
+    margin-bottom:25px;
 }
 
-
-#playBtn {
-
-    padding: 20px 70px;
-
-    font-size: 35px;
-    font-weight: bold;
-
-    color: white;
-
-    background: #4caf50;
-
-    border: 5px solid #222;
-
-    border-radius: 10px;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 8px 0 #2e7d32;
-
+p{
+    color:#ffe38a;
+    font-size:20px;
+    margin-bottom:50px;
 }
 
+button{
 
-#playBtn:hover {
+    pointer-events:auto;
 
-    background: #66bb6a;
+    font-family:'Press Start 2P', monospace;
+
+   width:400px;
+   height:90px;
+
+    border:none;
+
+    cursor:pointer;
+
+    font-size:28px;
+    
+    background:#6ab04c;
+
+    color:white;
+
+    transition:.2s;
+}
+
+button:hover{
+
+    transform:scale(1.06);
+
+    background:#82d85d;
 
 }
