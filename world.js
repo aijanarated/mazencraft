@@ -43,7 +43,6 @@ function createWorld(){
             let height = getHeight(x,z);
 
 
-
             let isWater =
                 x > 6 &&
                 x < 10 &&
@@ -109,39 +108,38 @@ function createWorld(){
 
 
 
-    // path follows the terrain
+    // curved adventure path
 
-    for(let z = -10; z <= 5; z++){
+    let path = [
+
+        [-5,-8],
+        [-4,-7],
+        [-3,-6],
+        [-2,-5],
+        [-1,-4],
+        [0,-3],
+        [2,-2],
+        [4,-2],
+        [5,-1],
+        [6,0]
+
+    ];
 
 
-        let y = getHeight(0,z) + 1;
 
+    path.forEach(point => {
+
+        let x = point[0];
+        let z = point[1];
 
         createBlock(
-            -1,
-            y,
+            x,
+            getHeight(x,z)+1,
             z,
             0xc2b280
         );
 
-
-        createBlock(
-            0,
-            y,
-            z,
-            0xc2b280
-        );
-
-
-        createBlock(
-            1,
-            y,
-            z,
-            0xc2b280
-        );
-
-
-    }
+    });
 
 
 
@@ -154,7 +152,6 @@ function createWorld(){
 
 
 function createTree(x,z){
-
 
     for(let y = 1; y <= 3; y++){
 
