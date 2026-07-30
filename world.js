@@ -29,7 +29,9 @@ function createWorld(){
                 x > -3 && x < 3 &&
                 z > -3 && z < 3
             ){
+
                 height = 3;
+
             }
 
 
@@ -54,7 +56,9 @@ function createWorld(){
             }
 
 
+
             for(let y = -2; y <= height; y++){
+
 
                 if(y === height){
 
@@ -66,7 +70,6 @@ function createWorld(){
                     );
 
                 }
-
                 else if(y >= -1){
 
                     createBlock(
@@ -77,7 +80,6 @@ function createWorld(){
                     );
 
                 }
-
                 else{
 
                     createBlock(
@@ -96,18 +98,31 @@ function createWorld(){
     }
 
 
-    // birthday path
+
+    // path that climbs toward the hill
 
     for(let z = -10; z <= 5; z++){
 
+        let y = 1;
+
+        if(z > -3){
+            y = 2;
+        }
+
+        if(z > 0){
+            y = 3;
+        }
+
+
         createBlock(
             0,
-            1,
+            y,
             z,
             0xc2b280
         );
 
     }
+
 
 
     createTree(-5,-5);
