@@ -6,95 +6,23 @@ body {
 }
 
 
-div {
+p {
+    color: white;
+    font-size: 40px;
     text-align: center;
 }
 
 
-
-p {
-    color: white;
-    font-size: 70px;
-    font-weight: bold;
-
-    text-shadow:
-        5px 5px 0 #555,
-        10px 10px 0 #000;
-
-    animation: titleFloat 3s infinite ease-in-out;
-}
-
-
-
 #playBtn {
 
-    margin-top: 40px;
+    display: block;
 
-    padding: 25px 90px;
+    margin: 20px auto;
 
-    font-size: 40px;
-    font-weight: bold;
+    padding: 15px 50px;
 
-    color: white;
-
-    background: #4caf50;
-
-    border: 6px solid #222;
-
-    border-radius: 10px;
+    font-size: 25px;
 
     cursor: pointer;
 
-
-    box-shadow:
-        0 10px 0 #2e7d32;
-
-
-    animation: buttonBounce 1.5s infinite ease-in-out;
-
 }
-
-
-
-#playBtn:hover {
-
-    background: #66bb6a;
-
-}
-
-
-
-@keyframes buttonBounce {
-
-    0%, 100% {
-
-        transform: translateY(0);
-
-    }
-
-
-    50% {
-
-        transform: translateY(-15px);
-
-    }
-
-}
-
-
-
-@keyframes titleFloat {
-
-    0%,100% {
-
-        transform: translateY(0);
-
-    }
-
-
-    50% {
-
-        transform: translateY(-8px);
-
-    }
-
