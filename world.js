@@ -24,11 +24,9 @@ function createBlock(x, y, z, texture){
 
 function createWorld(){
 
-
     for(let x = -10; x <= 10; x++){
 
         for(let z = -10; z <= 10; z++){
-
 
             let height = 0;
 
@@ -43,9 +41,7 @@ function createWorld(){
             }
 
 
-
             for(let y = -2; y <= height; y++){
-
 
                 if(y === height){
 
@@ -95,9 +91,7 @@ function createWorld(){
 
 function createTree(x,z){
 
-
-    const woodTexture = dirtTexture;
-
+    // trunk
 
     for(let y = 1; y <= 3; y++){
 
@@ -105,11 +99,13 @@ function createTree(x,z){
             x,
             y,
             z,
-            woodTexture
+            dirtTexture
         );
 
     }
 
+
+    // leaves
 
     for(let y = 3; y <= 5; y++){
 
@@ -130,3 +126,4 @@ function createTree(x,z){
 
     }
 
+}
