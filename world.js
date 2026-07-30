@@ -14,11 +14,7 @@ function createBlock(x, y, z, texture){
         })
     );
 
-    block.position.set(
-        x,
-        y,
-        z
-    );
+    block.position.set(x,y,z);
 
     scene.add(block);
 
@@ -94,3 +90,43 @@ function createWorld(){
     createTree(0,-7);
 
 }
+
+
+
+function createTree(x,z){
+
+
+    const woodTexture = dirtTexture;
+
+
+    for(let y = 1; y <= 3; y++){
+
+        createBlock(
+            x,
+            y,
+            z,
+            woodTexture
+        );
+
+    }
+
+
+    for(let y = 3; y <= 5; y++){
+
+        for(let a = -1; a <= 1; a++){
+
+            for(let b = -1; b <= 1; b++){
+
+                createBlock(
+                    x+a,
+                    y,
+                    z+b,
+                    grassTexture
+                );
+
+            }
+
+        }
+
+    }
+
