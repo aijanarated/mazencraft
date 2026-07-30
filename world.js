@@ -25,6 +25,8 @@ function createWorld(){
             let height = 0;
 
 
+            // hill
+
             if(
                 x > -3 && x < 3 &&
                 z > -3 && z < 3
@@ -34,6 +36,9 @@ function createWorld(){
 
             }
 
+
+
+            // lake
 
             let isWater =
                 x > 6 &&
@@ -99,23 +104,42 @@ function createWorld(){
 
 
 
-    // path that climbs toward the hill
+    // wider path climbing the hill
 
     for(let z = -10; z <= 5; z++){
 
         let y = 1;
 
-        if(z > -3){
+
+        if(z >= -3){
             y = 2;
         }
 
-        if(z > 0){
+
+        if(z >= 0){
             y = 3;
         }
 
 
+
+        createBlock(
+            -1,
+            y,
+            z,
+            0xc2b280
+        );
+
+
         createBlock(
             0,
+            y,
+            z,
+            0xc2b280
+        );
+
+
+        createBlock(
+            1,
             y,
             z,
             0xc2b280
@@ -135,6 +159,7 @@ function createWorld(){
 
 function createTree(x,z){
 
+
     for(let y = 1; y <= 3; y++){
 
         createBlock(
@@ -145,6 +170,7 @@ function createTree(x,z){
         );
 
     }
+
 
 
     for(let y = 3; y <= 5; y++){
