@@ -15,36 +15,41 @@ function createBlock(x, y, z, color){
 
 
 
+function getHeight(x,z){
+
+    if(
+        x > -3 && x < 3 &&
+        z > -3 && z < 3
+    ){
+
+        return 3;
+
+    }
+
+    return 0;
+
+}
+
+
+
 function createWorld(){
+
 
     for(let x = -10; x <= 10; x++){
 
         for(let z = -10; z <= 10; z++){
 
 
-            let height = 0;
+            let height = getHeight(x,z);
 
 
-            // hill
-
-            if(
-                x > -3 && x < 3 &&
-                z > -3 && z < 3
-            ){
-
-                height = 3;
-
-            }
-
-
-
-            // lake
 
             let isWater =
                 x > 6 &&
                 x < 10 &&
                 z > -3 &&
                 z < 3;
+
 
 
             if(isWater){
@@ -104,22 +109,12 @@ function createWorld(){
 
 
 
-    // wider path climbing the hill
+    // path follows the terrain
 
     for(let z = -10; z <= 5; z++){
 
-        let y = 1;
 
-
-        if(z >= -3){
-            y = 2;
-        }
-
-
-        if(z >= 0){
-            y = 3;
-        }
-
+        let y = getHeight(0,z) + 1;
 
 
         createBlock(
@@ -144,6 +139,7 @@ function createWorld(){
             z,
             0xc2b280
         );
+
 
     }
 
