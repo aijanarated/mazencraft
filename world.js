@@ -1,20 +1,28 @@
-const textureLoader = new THREE.TextureLoader();
+const grassMaterial = new THREE.MeshLambertMaterial({
+    color: 0x55aa33
+});
 
-const grassTexture = textureLoader.load("textures/grass.png");
-const dirtTexture = textureLoader.load("textures/dirt.png");
-const stoneTexture = textureLoader.load("textures/stone.png");
+const dirtMaterial = new THREE.MeshLambertMaterial({
+    color: 0x8b5a2b
+});
+
+const stoneMaterial = new THREE.MeshLambertMaterial({
+    color: 0x777777
+});
 
 
-function createBlock(x, y, z, texture){
+function createBlock(x, y, z, material){
 
     const block = new THREE.Mesh(
         new THREE.BoxGeometry(1,1,1),
-        new THREE.MeshLambertMaterial({
-            map: texture
-        })
+        material
     );
 
-    block.position.set(x,y,z);
+    block.position.set(
+        x,
+        y,
+        z
+    );
 
     scene.add(block);
 
@@ -28,7 +36,9 @@ function createWorld(){
 
         for(let z = -10; z <= 10; z++){
 
+
             let height = 0;
+
 
             if(
                 x > -3 && x < 3 &&
@@ -40,7 +50,9 @@ function createWorld(){
             }
 
 
+
             for(let y = -2; y <= height; y++){
+
 
                 if(y === height){
 
@@ -48,27 +60,27 @@ function createWorld(){
                         x,
                         y,
                         z,
-                        grassTexture
+                        grassMaterial
                     );
 
-                } 
+                }
                 else if(y >= -1){
 
                     createBlock(
                         x,
                         y,
                         z,
-                        dirtTexture
+                        dirtMaterial
                     );
 
-                } 
-                else {
+                }
+                else{
 
                     createBlock(
                         x,
                         y,
                         z,
-                        stoneTexture
+                        stoneMaterial
                     );
 
                 }
@@ -90,13 +102,14 @@ function createWorld(){
 
 function createTree(x,z){
 
+
     for(let y = 1; y <= 3; y++){
 
         createBlock(
             x,
             y,
             z,
-            dirtTexture
+            dirtMaterial
         );
 
     }
@@ -112,7 +125,7 @@ function createTree(x,z){
                     x+a,
                     y,
                     z+b,
-                    grassTexture
+                    grassMaterial
                 );
 
             }
