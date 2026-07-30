@@ -1,82 +1,40 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+body {
+    margin: 0;
+    overflow: hidden;
+    background: black;
 }
 
-html,body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    font-family:'Press Start 2P', monospace;
-    background:#000;
+
+#playButton {
+
+    padding: 20px 60px;
+    font-size: 32px;
+
+    border: none;
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    animation: bounce 2s infinite ease-in-out;
+
 }
 
-#game{
-    position:fixed;
-    inset:0;
-    width:100%;
-    height:100%;
-    display:block;
-}
 
-#menu{
-    position:fixed;
-    inset:0;
 
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
+@keyframes bounce {
 
-    pointer-events:none;
+    0% {
+        transform: translateY(0) scale(1);
+    }
 
-    z-index:100;
-}
 
-h1{
-    color:white;
-    font-size:85px;
-    
-    text-shadow:
-    5px 5px #333,
-    0 0 25px rgba(255,255,255,.25);
+    50% {
+        transform: translateY(-12px) scale(1.05);
+    }
 
-    margin-bottom:25px;
-}
 
-p{
-    color:#ffe38a;
-    font-size:20px;
-    margin-bottom:50px;
-}
-
-button{
-
-    pointer-events:auto;
-
-    font-family:'Press Start 2P', monospace;
-
-   width:400px;
-   height:90px;
-
-    border:none;
-
-    cursor:pointer;
-
-    font-size:28px;
-    
-    background:#6ab04c;
-
-    color:white;
-
-    transition:.2s;
-}
-
-button:hover{
-
-    transform:scale(1.06);
-
-    background:#82d85d;
+    100% {
+        transform: translateY(0) scale(1);
+    }
 
 }
