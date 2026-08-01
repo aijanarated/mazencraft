@@ -1,29 +1,27 @@
 let camera;
-let player;
+
+let player = {
+    x: 0,
+    y: 2,
+    z: 10,
+    speed: 0.15
+};
+
 
 let keys = {};
 
+let pitch = 0;
+let yaw = 0;
+
 let velocityY = 0;
 
-let canJump = true;
+let onGround = true;
+
 
 
 function createPlayer(gameCamera){
 
-
     camera = gameCamera;
-
-
-    player = {
-
-        x:0,
-        y:2,
-        z:10,
-
-        speed:0.12
-
-    };
-
 
     camera.position.set(
         player.x,
@@ -31,50 +29,95 @@ function createPlayer(gameCamera){
         player.z
     );
 
-
-
 }
 
 
 
 
-// Keyboard
+
+document.addEventListener(
+"keydown",
+(e)=>{
+
+    keys[e.code] = true;
+
+});
 
 
 document.addEventListener(
-    "keydown",
-    (event)=>{
+"keyup",
+(e)=>{
 
-        keys[event.code]=true;
+    keys[e.code] = false;
 
-
-        if(
-            event.code==="Space" &&
-            canJump
-        ){
-
-            velocityY = 0.25;
-
-            canJump=false;
-
-        }
+});
 
 
-    }
-
-);
 
 
 
 document.addEventListener(
-    "keyup",
-    (event)=>{
+"mousemove",
+(e)=>{
 
-        keys[event.code]=false;
+
+    if(!camera)
+        return;
+
+
+
+    yaw -= e.movementX * 0.002;
+
+    pitch -= e.movementY * 0.002;
+
+
+
+    // stop flipping upside down
+
+    pitch = Math.max(
+        -1.4,
+        Math.min(
+            1.4,
+            pitch
+        )
+    );
+
+
+    camera.rotation.order = "YXZ";
+
+    camera.rotation.y = yaw;
+
+    camera.rotation.x = pitch;
+
+
+
+});
+
+
+
+
+
+
+
+document.addEventListener(
+"keydown",
+(e)=>{
+
+
+    if(
+        e.code === "Space" &&
+        onGround
+    ){
+
+        velocityY = 0.25;
+
+        onGround = false;
 
     }
 
-);
+
+});
+
 
 
 
@@ -84,74 +127,96 @@ document.addEventListener(
 function updatePlayer(){
 
 
-
-    if(!player)
+    if(!camera)
         return;
 
 
 
-
-    let moveX=0;
-
-    let moveZ=0;
+    let direction = new THREE.Vector3();
 
 
-
-    if(keys["KeyW"])
-        moveZ-=player.speed;
+    camera.getWorldDirection(direction);
 
 
-    if(keys["KeyS"])
-        moveZ+=player.speed;
+    direction.y = 0;
+
+
+    direction.normalize();
 
 
 
-    if(keys["KeyA"])
-        moveX-=player.speed;
+    let right = new THREE.Vector3();
+
+
+    right.crossVectors(
+        direction,
+        camera.up
+    );
 
 
 
-    if(keys["KeyD"])
-        moveX+=player.speed;
+    if(keys["KeyW"]){
+
+        player.x += direction.x * player.speed;
+
+        player.z += direction.z * player.speed;
+
+    }
+
+
+
+    if(keys["KeyS"]){
+
+        player.x -= direction.x * player.speed;
+
+        player.z -= direction.z * player.speed;
+
+    }
+
+
+
+    if(keys["KeyA"]){
+
+        player.x -= right.x * player.speed;
+
+        player.z -= right.z * player.speed;
+
+    }
+
+
+
+    if(keys["KeyD"]){
+
+        player.x += right.x * player.speed;
+
+        player.z += right.z * player.speed;
+
+    }
 
 
 
 
 
-    player.x += moveX;
+    // Gravity
 
-    player.z += moveZ;
-
-
-
-
-
-
-    // gravity
-
-
-    velocityY -=0.01;
+    velocityY -= 0.01;
 
 
     player.y += velocityY;
 
 
 
-    if(player.y <=2){
+    if(player.y <= 2){
 
 
-        player.y=2;
+        player.y = 2;
 
+        velocityY = 0;
 
-        velocityY=0;
-
-
-        canJump=true;
+        onGround = true;
 
 
     }
-
-
 
 
 
@@ -167,55 +232,4 @@ function updatePlayer(){
 
     );
 
-
-
 }
-
-
-
-
-
-
-
-// Mouse look
-
-
-let mouseX=0;
-let mouseY=0;
-
-
-document.addEventListener(
-"mousemove",
-(event)=>{
-
-
-    mouseX -= event.movementX*0.002;
-
-
-    mouseY -= event.movementY*0.002;
-
-
-
-    mouseY=Math.max(
-        -1.5,
-        Math.min(
-            1.5,
-            mouseY
-        )
-    );
-
-
-
-    if(camera){
-
-
-        camera.rotation.y = mouseX;
-
-
-        camera.rotation.x = mouseY;
-
-
-    }
-
-
-});
