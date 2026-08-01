@@ -22,7 +22,7 @@ function loadTextures() {
         textureLoader.load("textures/stone.png");
 
     textures.wood =
-        textureLoader.load("textures/wood.png");
+        textureLoader.load("textures/wood1.png");
 
     textures.leaves =
         textureLoader.load("textures/leaves.png");
