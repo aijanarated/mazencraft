@@ -1,38 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MazenCraft</title>
+
+    <title>MizrCraft: A Birthday Adventure</title>
 
     <link rel="stylesheet" href="style.css">
 
-    <!-- Minecraft-style font -->
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-
-    <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/PointerLockControls.js"></script>
 </head>
+
 
 <body>
 
-<canvas id="game"></canvas>
 
-<div id="menu">
+<!-- Main Menu -->
 
-    <h1>MAZENCRAFT</h1>
+<div id="mainMenu">
 
-    <p>A Birthday Adventure</p>
+    <h1>MizrCraft</h1>
 
-    <button id="playBtn">PLAY</button>
+    <h2>A Birthday Adventure</h2>
+
+
+    <button id="playBtn">
+        PLAY
+    </button>
 
 </div>
 
+
+
+<!-- Password -->
+
+<div id="passwordScreen" class="hidden">
+
+    <h2>Enter Password</h2>
+
+
+    <input 
+        id="passwordInput"
+        type="password"
+        placeholder="Password"
+    >
+
+
+    <p>
+        Hint: Your birthday
+    </p>
+
+
+    <button id="passwordBtn">
+        ENTER
+    </button>
+
+
+    <p id="passwordError"></p>
+
+
+</div>
+
+
+
+
+<!-- Game Interface -->
+
+<div id="gameUI" class="hidden">
+
+
+    <div id="diamondCounter">
+
+        Diamonds:
+        <span id="diamondAmount">
+            0
+        </span>
+        /
+        10
+
+    </div>
+
+
+
+    <div id="achievementBox">
+
+    </div>
+
+
+
+</div>
+
+
+
+
+<!-- Final Reward -->
+
+<div id="rewardScreen" class="hidden">
+
+
+    <h1>
+        FINAL REWARD UNLOCKED
+    </h1>
+
+
+
+    <div id="giftChest">
+
+
+        <div class="pixelGift" id="breadGift">
+
+            <img src="textures/banana_bread.png">
+
+            <p>
+                Banana Bread
+            </p>
+
+        </div>
+
+
+
+        <div class="pixelGift" id="glassesGift">
+
+            <img src="textures/mizr_glasses.png">
+
+
+            <p>
+                Blue Mizr Glasses
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+
+    <button id="letterBtn">
+
+        Open Letter
+
+    </button>
+
+
+</div>
+
+
+
+
+
+<!-- Letter -->
+
+<div id="letterScreen" class="hidden">
+
+
+    <div id="book">
+
+
+        <h2>
+            A Special Message
+        </h2>
+
+
+        <p id="letterText">
+
+        </p>
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+<!-- Three.js -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+
+
+<!-- Game Files -->
+
 <script src="world.js"></script>
+
 <script src="player.js"></script>
+
 <script src="ui.js"></script>
+
 <script src="game.js"></script>
 
+
+
 </body>
+
 </html>
