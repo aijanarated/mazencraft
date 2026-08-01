@@ -1,99 +1,221 @@
+let camera;
+let player;
 
-let controls;
+let keys = {};
 
-let moveForward = false;
-let moveBackward = false;
-let moveLeft = false;
-let moveRight = false;
+let velocityY = 0;
 
-let velocity = new THREE.Vector3();
+let canJump = true;
 
 
-function createPlayer(){
+function createPlayer(gameCamera){
 
-    controls = new THREE.PointerLockControls(
-        camera,
-        document.body
+
+    camera = gameCamera;
+
+
+    player = {
+
+        x:0,
+        y:2,
+        z:10,
+
+        speed:0.12
+
+    };
+
+
+    camera.position.set(
+        player.x,
+        player.y,
+        player.z
     );
 
 
-    scene.add(
-        controls.getObject()
-    );
-
-
-    controls.getObject().position.set(
-        0,
-        3,
-        10
-    );
-
-
-    document.addEventListener(
-        "click",
-        function(){
-            controls.lock();
-        }
-    );
-
-
-    document.addEventListener(
-        "keydown",
-        function(event){
-
-            if(event.code === "KeyW")
-                moveForward = true;
-
-            if(event.code === "KeyS")
-                moveBackward = true;
-
-            if(event.code === "KeyA")
-                moveLeft = true;
-
-            if(event.code === "KeyD")
-                moveRight = true;
-
-        }
-    );
-
-
-    document.addEventListener(
-        "keyup",
-        function(event){
-
-            if(event.code === "KeyW")
-                moveForward = false;
-
-            if(event.code === "KeyS")
-                moveBackward = false;
-
-            if(event.code === "KeyA")
-                moveLeft = false;
-
-            if(event.code === "KeyD")
-                moveRight = false;
-
-        }
-    );
 
 }
+
+
+
+
+// Keyboard
+
+
+document.addEventListener(
+    "keydown",
+    (event)=>{
+
+        keys[event.code]=true;
+
+
+        if(
+            event.code==="Space" &&
+            canJump
+        ){
+
+            velocityY = 0.25;
+
+            canJump=false;
+
+        }
+
+
+    }
+
+);
+
+
+
+document.addEventListener(
+    "keyup",
+    (event)=>{
+
+        keys[event.code]=false;
+
+    }
+
+);
+
+
+
+
 
 
 function updatePlayer(){
 
-    let speed = 0.1;
 
 
-    if(moveForward)
-        controls.moveForward(speed);
+    if(!player)
+        return;
 
-    if(moveBackward)
-        controls.moveForward(-speed);
 
-    if(moveLeft)
-        controls.moveRight(-speed);
 
-    if(moveRight)
-        controls.moveRight(speed);
+
+    let moveX=0;
+
+    let moveZ=0;
+
+
+
+    if(keys["KeyW"])
+        moveZ-=player.speed;
+
+
+    if(keys["KeyS"])
+        moveZ+=player.speed;
+
+
+
+    if(keys["KeyA"])
+        moveX-=player.speed;
+
+
+
+    if(keys["KeyD"])
+        moveX+=player.speed;
+
+
+
+
+
+    player.x += moveX;
+
+    player.z += moveZ;
+
+
+
+
+
+
+    // gravity
+
+
+    velocityY -=0.01;
+
+
+    player.y += velocityY;
+
+
+
+    if(player.y <=2){
+
+
+        player.y=2;
+
+
+        velocityY=0;
+
+
+        canJump=true;
+
+
+    }
+
+
+
+
+
+
+
+    camera.position.set(
+
+        player.x,
+
+        player.y,
+
+        player.z
+
+    );
+
+
 
 }
+
+
+
+
+
+
+
+// Mouse look
+
+
+let mouseX=0;
+let mouseY=0;
+
+
+document.addEventListener(
+"mousemove",
+(event)=>{
+
+
+    mouseX -= event.movementX*0.002;
+
+
+    mouseY -= event.movementY*0.002;
+
+
+
+    mouseY=Math.max(
+        -1.5,
+        Math.min(
+            1.5,
+            mouseY
+        )
+    );
+
+
+
+    if(camera){
+
+
+        camera.rotation.y = mouseX;
+
+
+        camera.rotation.x = mouseY;
+
+
+    }
+
+
+});
