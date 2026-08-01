@@ -2,13 +2,12 @@
 <html lang="en">
 
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MizrCraft: A Birthday Adventure</title>
 
-    <title>MizrCraft: A Birthday Adventure</title>
-
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -16,180 +15,73 @@
 <body>
 
 
-<!-- Main Menu -->
-
 <div id="mainMenu">
 
-    <h1>MizrCraft</h1>
+<h1>MizrCraft</h1>
 
-    <h2>A Birthday Adventure</h2>
+<h2>A Birthday Adventure</h2>
 
-    <button id="playBtn">
-        PLAY
-    </button>
+<button id="playBtn">
+PLAY
+</button>
 
 </div>
 
 
 
-
-<!-- Password Screen -->
 
 <div id="passwordScreen" class="hidden">
 
-    <h2>Enter Password</h2>
 
-    <input 
-        id="passwordInput"
-        type="password"
-        placeholder="Password"
-    >
-
-    <p>
-        Hint: Your birthday
-    </p>
+<h2>Enter Password</h2>
 
 
-    <button id="passwordBtn">
-        ENTER
-    </button>
+<input 
+id="passwordInput"
+type="password"
+placeholder="Password"
 
 
-    <p id="passwordError"></p>
+
+<p id="hint">
+Hint: Your birthday
+</p>
+
+
+<button id="passwordBtn">
+ENTER
+</button>
+
+
+<p id="passwordError"></p>
 
 
 </div>
 
 
 
-
-
-<!-- Game UI -->
 
 <div id="gameUI" class="hidden">
 
-
-    <div id="diamondCounter">
-
-        Diamonds:
-        <span id="diamondAmount">
-            0
-        </span>
-        /10
-
-    </div>
+<div id="diamondCounter">
+Diamonds:
+<span id="diamondAmount">0</span>/10
+</div>
 
 
-    <div id="achievementBox"></div>
+<div id="achievementBox"></div>
 
 
 </div>
 
 
-
-
-
-
-<!-- Reward Screen -->
-
-<div id="rewardScreen" class="hidden">
-
-
-    <h1>
-        FINAL REWARD UNLOCKED
-    </h1>
-
-
-
-    <div id="giftChest">
-
-
-        <div class="pixelGift">
-
-            <div class="fakeItem bread">
-
-            </div>
-
-            <p>
-                Banana Bread
-            </p>
-
-        </div>
-
-
-
-        <div class="pixelGift">
-
-
-            <div class="fakeItem glasses">
-
-            </div>
-
-
-            <p>
-                Blue Mizr Glasses
-            </p>
-
-
-        </div>
-
-
-    </div>
-
-
-
-    <button id="letterBtn">
-        Open Letter
-    </button>
-
-
-</div>
-
-
-
-
-
-
-<!-- Letter Screen -->
-
-<div id="letterScreen" class="hidden">
-
-
-    <div id="book">
-
-        <h2>
-            A Special Message
-        </h2>
-
-
-        <p id="letterText"></p>
-
-
-    </div>
-
-
-</div>
-
-
-
-
-
-
-
-<!-- Three.js -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-
-
 <script src="world.js"></script>
-
 <script src="player.js"></script>
-
 <script src="ui.js"></script>
-
 <script src="game.js"></script>
-
 
 
 </body>
