@@ -24,7 +24,6 @@
 
     <h2>A Birthday Adventure</h2>
 
-
     <button id="playBtn">
         PLAY
     </button>
@@ -33,19 +32,18 @@
 
 
 
-<!-- Password -->
+
+<!-- Password Screen -->
 
 <div id="passwordScreen" class="hidden">
 
     <h2>Enter Password</h2>
-
 
     <input 
         id="passwordInput"
         type="password"
         placeholder="Password"
     >
-
 
     <p>
         Hint: Your birthday
@@ -65,7 +63,8 @@
 
 
 
-<!-- Game Interface -->
+
+<!-- Game UI -->
 
 <div id="gameUI" class="hidden">
 
@@ -76,17 +75,12 @@
         <span id="diamondAmount">
             0
         </span>
-        /
-        10
+        /10
 
     </div>
 
 
-
-    <div id="achievementBox">
-
-    </div>
-
+    <div id="achievementBox"></div>
 
 
 </div>
@@ -94,7 +88,9 @@
 
 
 
-<!-- Final Reward -->
+
+
+<!-- Reward Screen -->
 
 <div id="rewardScreen" class="hidden">
 
@@ -108,9 +104,11 @@
     <div id="giftChest">
 
 
-        <div class="pixelGift" id="breadGift">
+        <div class="pixelGift">
 
-            <img src="textures/banana_bread.png">
+            <div class="fakeItem bread">
+
+            </div>
 
             <p>
                 Banana Bread
@@ -120,14 +118,18 @@
 
 
 
-        <div class="pixelGift" id="glassesGift">
+        <div class="pixelGift">
 
-            <img src="textures/mizr_glasses.png">
+
+            <div class="fakeItem glasses">
+
+            </div>
 
 
             <p>
                 Blue Mizr Glasses
             </p>
+
 
         </div>
 
@@ -136,11 +138,8 @@
 
 
 
-
     <button id="letterBtn">
-
         Open Letter
-
     </button>
 
 
@@ -150,28 +149,28 @@
 
 
 
-<!-- Letter -->
+
+<!-- Letter Screen -->
 
 <div id="letterScreen" class="hidden">
 
 
     <div id="book">
 
-
         <h2>
             A Special Message
         </h2>
 
 
-        <p id="letterText">
-
-        </p>
+        <p id="letterText"></p>
 
 
     </div>
 
 
 </div>
+
+
 
 
 
@@ -182,8 +181,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 
-
-<!-- Game Files -->
 
 <script src="world.js"></script>
 
