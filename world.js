@@ -1,17 +1,17 @@
-
 let scene;
 
 let textureLoader = new THREE.TextureLoader();
 
 let textures = {};
 
+let blocks = {};
+
 let diamonds = [];
 
-let terrain = {};
+const WORLD_SIZE = 70;
 
 
-
-function loadTextures() {
+function loadTextures(){
 
     textures.grassTop =
         textureLoader.load("textures/grass_top.png");
@@ -35,20 +35,16 @@ function loadTextures() {
         textureLoader.load("textures/diamond.png");
 
 
-    Object.values(textures).forEach(texture => {
-
+    Object.values(textures).forEach(texture=>{
         texture.magFilter = THREE.NearestFilter;
         texture.minFilter = THREE.NearestFilter;
-
     });
 
 }
 
 
 
-
-
-function createWorld(gameScene) {
+function createWorld(gameScene){
 
     scene = gameScene;
 
@@ -58,7 +54,7 @@ function createWorld(gameScene) {
     scene.add(
         new THREE.AmbientLight(
             0xffffff,
-            0.7
+            0.8
         )
     );
 
@@ -68,13 +64,11 @@ function createWorld(gameScene) {
         1
     );
 
-
     sun.position.set(
         20,
-        30,
-        10
+        40,
+        20
     );
-
 
     scene.add(sun);
 
@@ -82,9 +76,9 @@ function createWorld(gameScene) {
 
     generateTerrain();
 
-
     generateTrees();
 
+    generateCaves();
 
     generateDiamonds();
 
@@ -94,66 +88,17 @@ function createWorld(gameScene) {
 
 
 
+function getTerrainHeight(x,z){
 
-function generateTerrain(){
+    return Math.floor(
 
+        Math.sin(x * 0.12) * 2 +
 
-    for(let x = -25; x <= 25; x++){
+        Math.cos(z * 0.12) * 2 +
 
+        Math.sin((x+z) * 0.05) * 3
 
-        for(let z = -25; z <= 25; z++){
-
-
-
-            let height =
-                Math.floor(
-                    Math.sin(x * 0.15) * 3 +
-                    Math.cos(z * 0.15) * 3
-                );
-
-
-
-            terrain[`${x},${z}`] = height;
-
-
-
-            createGrassBlock(
-                x,
-                height,
-                z
-            );
-
-
-
-            createBlock(
-                x,
-                height - 1,
-                z,
-                textures.dirt
-            );
-
-
-
-            for(
-                let y = height - 2;
-                y >= height - 8;
-                y--
-            ){
-
-                createBlock(
-                    x,
-                    y,
-                    z,
-                    textures.stone
-                );
-
-            }
-
-
-        }
-
-    }
-
+    );
 
 }
 
@@ -161,9 +106,68 @@ function generateTerrain(){
 
 
 
+function generateTerrain(){
 
 
-function createGrassBlock(x,y,z){
+    for(
+        let x = -WORLD_SIZE/2;
+        x < WORLD_SIZE/2;
+        x++
+    ){
+
+        for(
+            let z = -WORLD_SIZE/2;
+            z < WORLD_SIZE/2;
+            z++
+        ){
+
+
+            let height =
+                getTerrainHeight(x,z);
+
+
+            addGrassBlock(
+                x,
+                height,
+                z
+            );
+
+
+            addBlock(
+                x,
+                height-1,
+                z,
+                "dirt"
+            );
+
+
+
+            for(
+                let y = height-2;
+                y >= height-10;
+                y--
+            ){
+
+                addBlock(
+                    x,
+                    y,
+                    z,
+                    "stone"
+                );
+
+            }
+
+        }
+
+    }
+
+}
+
+
+
+
+
+function addGrassBlock(x,y,z){
 
 
     let materials = [
@@ -195,187 +199,33 @@ function createGrassBlock(x,y,z){
     ];
 
 
+    let block =
+        new THREE.Mesh(
 
-    let block = new THREE.Mesh(
+            new THREE.BoxGeometry(
+                1,
+                1,
+                1
+            ),
 
-        new THREE.BoxGeometry(
-            1,
-            1,
-            1
-        ),
+            materials
 
-        materials
-
-    );
-
-
-
-    block.position.set(
-        x,
-        y,
-        z
-    );
-
-
-
-    scene.add(block);
-
-}
-
-
-
-
-
-function createBlock(x,y,z,texture){
-
-
-    let block = new THREE.Mesh(
-
-        new THREE.BoxGeometry(
-            1,
-            1,
-            1
-        ),
-
-        new THREE.MeshLambertMaterial({
-
-            map:texture
-
-        })
-
-    );
-
-
-    block.position.set(
-        x,
-        y,
-        z
-    );
-
-
-    scene.add(block);
-
-}
-
-
-
-
-function generateTrees(){
-
-    for(let x = -20; x <= 20; x += 5){
-
-        for(let z = -20; z <= 20; z += 5){
-
-
-            if(Math.random() > 0.65){
-
-                let height =
-                    terrain[`${x},${z}`];
-
-
-                if(height !== undefined){
-
-                    createTree(
-                        x,
-                        height + 1,
-                        z
-                    );
-
-                }
-
-            }
-
-        }
-
-    }
-
-}
-
-
-
-
-
-
-function createTree(x,y,z){
-
-
-    // trunk
-
-    let trunkHeight =
-        4 + Math.floor(Math.random()*2);
-
-
-
-    for(let i = 0; i < trunkHeight; i++){
-
-        createBlock(
-            x,
-            y+i,
-            z,
-            textures.wood
         );
 
-    }
+
+    block.position.set(
+        x,
+        y,
+        z
+    );
 
 
-
-    // layered leaves
-
-    let layers = [
-
-        {level:5, size:1},
-
-        {level:4, size:2},
-
-        {level:3, size:3},
-
-        {level:2, size:2}
-
-    ];
+    blocks[
+        ${x},${y},${z}
+    ] = block;
 
 
-
-    layers.forEach(layer => {
-
-
-        for(
-            let a = -layer.size;
-            a <= layer.size;
-            a++
-        ){
-
-            for(
-                let b = -layer.size;
-                b <= layer.size;
-                b++
-            ){
-
-
-                if(
-                    Math.random() > 0.15
-                ){
-
-                    createBlock(
-
-                        x+a,
-
-                        y+layer.level,
-
-                        z+b,
-
-                        textures.leaves
-
-                    );
-
-                }
-
-            }
-
-        }
-
-
-    });
-
+    scene.add(block);
 
 }
 
@@ -383,56 +233,80 @@ function createTree(x,y,z){
 
 
 
+function addBlock(x,y,z,type){
 
 
+    let block =
+        new THREE.Mesh(
 
+            new THREE.BoxGeometry(
+                1,
+                1,
+                1
+            ),
+
+            new THREE.MeshLambertMaterial({
+
+                map:textures[type]
+
+            })
+
+        );
+
+
+    block.position.set(
+        x,
+        y,
+        z
+    );
+
+
+    block.userData.type = type;
+
+
+    blocks[
+        ${x},${y},${z}
+    ] = block;
+
+
+    scene.add(block);
+
+}
 function generateDiamonds(){
 
 
-    for(let i = 0; i < 12; i++){
+    for(let i = 0; i < 25; i++){
 
 
         let x =
             Math.floor(
-                Math.random()*35
-            ) - 17;
+                Math.random() * 60
+            ) - 30;
 
 
         let z =
             Math.floor(
-                Math.random()*35
-            ) - 17;
+                Math.random() * 60
+            ) - 30;
 
 
 
-        let ground =
-            terrain[`${x},${z}`];
+        let y =
+            getTerrainHeight(x,z)
+            - (5 + Math.floor(Math.random()*5));
 
 
 
-        if(ground !== undefined){
-
-
-            let y =
-                ground - 
-                (3 + Math.floor(Math.random()*4));
-
-
-
-            createDiamond(
-                x,
-                y,
-                z
-            );
-
-
-        }
+        createDiamond(
+            x,
+            y,
+            z
+        );
 
 
     }
 
 }
-
 
 
 
@@ -444,24 +318,25 @@ function createDiamond(x,y,z){
 
 
     let diamond =
-    new THREE.Mesh(
+        new THREE.Mesh(
 
 
-        new THREE.BoxGeometry(
-            0.5,
-            0.5,
-            0.5
-        ),
+            new THREE.BoxGeometry(
+                0.5,
+                0.5,
+                0.5
+            ),
 
 
-        new THREE.MeshLambertMaterial({
+            new THREE.MeshLambertMaterial({
 
-            map:textures.diamond
+                map:textures.diamond
 
-        })
+            })
 
 
-    );
+        );
+
 
 
     diamond.position.set(
@@ -471,12 +346,20 @@ function createDiamond(x,y,z){
     );
 
 
+
     diamond.userData.isDiamond = true;
 
 
-    diamonds.push(diamond);
+
+    diamonds.push(
+        diamond
+    );
 
 
-    scene.add(diamond);
+
+    scene.add(
+        diamond
+    );
+
 
 }
