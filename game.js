@@ -1,108 +1,73 @@
-let scene;
-let camera;
-let renderer;
+let gameScene;
+let gameCamera;
+let gameRenderer;
 
 let gameStarted = false;
 
 
+function startGame() {
 
-function startGame(){
+    document.getElementById("mainMenu").classList.add("hidden");
+    document.getElementById("passwordScreen").classList.add("hidden");
+    document.getElementById("gameUI").classList.remove("hidden");
 
+    createGame();
 
-    document.getElementById("mainMenu")
-        .classList.add("hidden");
+    createWorld(gameScene);
 
+    createPlayer(gameCamera);
 
-    document.getElementById("passwordScreen")
-        .classList.add("hidden");
-
-
-    document.getElementById("gameUI")
-        .classList.remove("hidden");
-
-
-
-    createScene();
-
-
-    createWorld(scene);
-
-
-    createPlayer(camera);
-
+    gameStarted = true;
 
     animate();
 
-
 }
 
 
 
+function createGame() {
+
+    gameScene = new THREE.Scene();
+
+    gameScene.background = new THREE.Color(0x87ceeb);
 
 
 
-function createScene(){
-
-
-    scene = new THREE.Scene();
-
-
-
-    scene.background =
-        new THREE.Color(
-            0x87ceeb
-        );
-
-
-
-    camera =
-        new THREE.PerspectiveCamera(
-
-            75,
-
-            window.innerWidth /
-            window.innerHeight,
-
-            0.1,
-
-            1000
-
-        );
-
-
-
-
-
-    renderer =
-        new THREE.WebGLRenderer();
-
-
-
-    renderer.setSize(
-
-        window.innerWidth,
-
-        window.innerHeight
-
+    gameCamera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
     );
 
+
+    gameCamera.position.set(
+        0,
+        2,
+        10
+    );
+
+
+
+    gameRenderer = new THREE.WebGLRenderer();
+
+
+    gameRenderer.setSize(
+        window.innerWidth,
+        window.innerHeight
+    );
 
 
     document.body.appendChild(
-        renderer.domElement
+        gameRenderer.domElement
     );
-
 
 
 }
 
 
 
-
-
-
-function animate(){
-
+function animate() {
 
     requestAnimationFrame(
         animate
@@ -116,17 +81,12 @@ function animate(){
     }
 
 
-    renderer.render(
-        scene,
-        camera
+    gameRenderer.render(
+        gameScene,
+        gameCamera
     );
 
-
 }
-
-
-
-
 
 
 
@@ -136,30 +96,23 @@ window.addEventListener(
 ()=>{
 
 
-const playButton =
-document.getElementById(
-    "playBtn"
-);
+const playBtn =
+document.getElementById("playBtn");
+
+
+const passwordBtn =
+document.getElementById("passwordBtn");
 
 
 
-const passwordScreen =
-document.getElementById(
-    "passwordScreen"
-);
+playBtn.onclick = ()=>{
 
 
-
-playButton.onclick = ()=>{
-
-
-    document.getElementById(
-        "mainMenu"
-    )
+    document.getElementById("mainMenu")
     .classList.add("hidden");
 
 
-    passwordScreen
+    document.getElementById("passwordScreen")
     .classList.remove("hidden");
 
 
@@ -168,46 +121,29 @@ playButton.onclick = ()=>{
 
 
 
-
-document.getElementById(
-"passwordBtn"
-)
-.onclick = ()=>{
+passwordBtn.onclick = ()=>{
 
 
-    const input =
-    document.getElementById(
-        "passwordInput"
-    ).value;
+    let password =
+    document.getElementById("passwordInput").value;
 
 
 
-    if(input === "1611"){
-
-
-        gameStarted = true;
-
+    if(password === "1611"){
 
         startGame();
 
-
     }
-
     else{
 
-
-        document.getElementById(
-            "passwordError"
-        ).innerText =
+        document.getElementById("passwordError")
+        .innerText =
         "Wrong password!";
 
-
     }
-
 
 
 };
-
 
 
 });
