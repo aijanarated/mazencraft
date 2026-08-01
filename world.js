@@ -1,22 +1,75 @@
 let scene;
 
+let textureLoader = new THREE.TextureLoader();
+
+let textures = {};
+
 let diamonds = [];
 
-let diamondCount = 0;
+
+
+function loadTextures(){
+
+    textures.grass =
+        textureLoader.load("textures/grass.png");
+
+    textures.dirt =
+        textureLoader.load("textures/dirt.png");
+
+    textures.stone =
+        textureLoader.load("textures/stone.png");
+
+    textures.wood =
+        textureLoader.load("textures/wood.png");
+
+    textures.leaves =
+        textureLoader.load("textures/leaves.png");
+
+    textures.diamond =
+        textureLoader.load("textures/diamond.png");
 
 
 
-function createWorld(gameScene) {
+    Object.values(textures).forEach(texture => {
+
+        texture.magFilter =
+            THREE.NearestFilter;
+
+        texture.minFilter =
+            THREE.NearestFilter;
+
+    });
+
+}
+
+
+
+
+
+function createWorld(gameScene){
 
     scene = gameScene;
 
+    loadTextures();
 
-    // Lighting
 
-    const sun = new THREE.DirectionalLight(
-        0xffffff,
-        1.2
+
+    // lighting
+
+    scene.add(
+        new THREE.AmbientLight(
+            0xffffff,
+            0.6
+        )
     );
+
+
+    let sun =
+    new THREE.DirectionalLight(
+        0xffffff,
+        1
+    );
+
 
     sun.position.set(
         20,
@@ -24,60 +77,59 @@ function createWorld(gameScene) {
         10
     );
 
+
     scene.add(sun);
 
 
 
-    scene.add(
-        new THREE.AmbientLight(
-            0xffffff,
-            0.5
-        )
-    );
 
 
 
+    // surface
 
-    // Terrain
+    for(
+        let x=-20;
+        x<=20;
+        x++
+    ){
 
-    const size = 40;
+        for(
+            let z=-20;
+            z<=20;
+            z++
+        ){
 
 
-    for(let x = -size; x <= size; x++){
-
-        for(let z = -size; z <= size; z++){
-
-
-            let height =
-            Math.floor(
-                Math.sin(x * 0.15) *
-                Math.cos(z * 0.15) *
-                2
+            createBlock(
+                x,
+                0,
+                z,
+                textures.grass
             );
 
 
             createBlock(
                 x,
-                height,
+                -1,
                 z,
-                0x55aa33
+                textures.dirt
             );
 
 
-            createBlock(
-                x,
-                height - 1,
-                z,
-                0x8b5a2b
-            );
+            for(
+                let y=-2;
+                y>=-5;
+                y--
+            ){
 
+                createBlock(
+                    x,
+                    y,
+                    z,
+                    textures.stone
+                );
 
-            createBlock(
-                x,
-                height - 2,
-                z,
-                0x777777
-            );
+            }
 
 
         }
@@ -87,41 +139,54 @@ function createWorld(gameScene) {
 
 
 
-    // Trees
 
-    createTree(-12,1,-10);
+    // trees
 
-    createTree(8,1,-14);
-
-    createTree(15,1,8);
-
-
-
+    createTree(
+        -8,
+        1,
+        -8
+    );
 
 
+    createTree(
+        10,
+        1,
+        -10
+    );
 
-    // Diamonds
 
-    createDiamond(0,3,0);
+    createTree(
+        8,
+        1,
+        10
+    );
 
-    createDiamond(10,2,5);
 
-    createDiamond(-10,2,8);
 
-    createDiamond(15,3,-5);
 
-    createDiamond(-15,3,-10);
 
-    createDiamond(5,2,15);
+    // underground diamonds
 
-    createDiamond(-5,3,18);
+    createDiamond(
+        5,
+        -4,
+        7
+    );
 
-    createDiamond(20,2,0);
 
-    createDiamond(-20,2,5);
+    createDiamond(
+        -6,
+        -5,
+        3
+    );
 
-    createDiamond(0,4,20);
 
+    createDiamond(
+        12,
+        -3,
+        -8
+    );
 
 }
 
@@ -131,30 +196,32 @@ function createWorld(gameScene) {
 
 
 
-function createBlock(x,y,z,color){
 
-
-    let geometry =
-    new THREE.BoxGeometry(
-        1,
-        1,
-        1
-    );
-
-
-    let material =
-    new THREE.MeshLambertMaterial({
-
-        color:color
-
-    });
+function createBlock(
+x,
+y,
+z,
+texture
+){
 
 
     let block =
     new THREE.Mesh(
-        geometry,
-        material
+
+        new THREE.BoxGeometry(
+            1,
+            1,
+            1
+        ),
+
+        new THREE.MeshLambertMaterial({
+
+            map:texture
+
+        })
+
     );
+
 
 
     block.position.set(
@@ -175,36 +242,49 @@ function createBlock(x,y,z,color){
 
 
 
-function createTree(x,y,z){
+
+function createTree(
+x,
+y,
+z
+){
 
 
-    for(let i=0;i<4;i++){
-
+    for(
+        let i=0;
+        i<4;
+        i++
+    ){
 
         createBlock(
             x,
             y+i,
             z,
-            0x8b5a2b
+            textures.wood
         );
-
 
     }
 
 
 
-    for(let a=-2;a<=2;a++){
+    for(
+        let a=-2;
+        a<=2;
+        a++
+    ){
 
-        for(let b=-2;b<=2;b++){
-
+        for(
+            let b=-2;
+            b<=2;
+            b++
+        ){
 
             createBlock(
                 x+a,
                 y+4,
                 z+b,
-                0x228B22
+                textures.leaves
             );
-
 
         }
 
@@ -220,45 +300,42 @@ function createTree(x,y,z){
 
 
 
-function createDiamond(x,y,z){
+function createDiamond(
+x,
+y,
+z
+){
 
 
-    let geo =
-    new THREE.OctahedronGeometry(
-        0.4
-    );
-
-
-    let mat =
-    new THREE.MeshLambertMaterial({
-
-        color:0x00ffff
-
-    });
-
-
-
-    let d =
+    let diamond =
     new THREE.Mesh(
-        geo,
-        mat
+
+        new THREE.BoxGeometry(
+            0.5,
+            0.5,
+            0.5
+        ),
+
+        new THREE.MeshLambertMaterial({
+
+            map:textures.diamond
+
+        })
+
     );
 
 
-    d.position.set(
+
+    diamond.position.set(
         x,
         y,
         z
     );
 
 
-    d.userData.isDiamond=true;
+    diamonds.push(diamond);
 
 
-    diamonds.push(d);
-
-
-    scene.add(d);
-
+    scene.add(diamond);
 
 }
