@@ -1,69 +1,213 @@
-const canvas = document.getElementById("game");
+let scene;
+let camera;
+let renderer;
 
-const scene = new THREE.Scene();
-
-scene.background = new THREE.Color(0x87ceeb);
-
-
-const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-);
+let gameStarted = false;
 
 
-camera.position.set(
-    0,
-    5,
-    10
-);
+
+function startGame(){
 
 
-const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
-});
+    document.getElementById("mainMenu")
+        .classList.add("hidden");
 
 
-renderer.setSize(
-    window.innerWidth,
-    window.innerHeight
-);
+    document.getElementById("passwordScreen")
+        .classList.add("hidden");
 
 
-const sunlight = new THREE.DirectionalLight(
-    0xffffff,
-    2
-);
-
-sunlight.position.set(
-    10,
-    20,
-    10
-);
-
-scene.add(sunlight);
+    document.getElementById("gameUI")
+        .classList.remove("hidden");
 
 
-createWorld();
 
-createPlayer();
+    createScene();
+
+
+    createWorld(scene);
+
+
+    createPlayer(camera);
+
+
+    animate();
+
+
+}
+
+
+
+
+
+
+function createScene(){
+
+
+    scene = new THREE.Scene();
+
+
+
+    scene.background =
+        new THREE.Color(
+            0x87ceeb
+        );
+
+
+
+    camera =
+        new THREE.PerspectiveCamera(
+
+            75,
+
+            window.innerWidth /
+            window.innerHeight,
+
+            0.1,
+
+            1000
+
+        );
+
+
+
+
+
+    renderer =
+        new THREE.WebGLRenderer();
+
+
+
+    renderer.setSize(
+
+        window.innerWidth,
+
+        window.innerHeight
+
+    );
+
+
+
+    document.body.appendChild(
+        renderer.domElement
+    );
+
+
+
+}
+
+
+
+
 
 
 function animate(){
 
-    requestAnimationFrame(animate);
 
-    if(typeof updatePlayer === "function"){
+    requestAnimationFrame(
+        animate
+    );
+
+
+    if(gameStarted){
+
         updatePlayer();
+
     }
+
 
     renderer.render(
         scene,
         camera
     );
 
+
 }
 
 
-animate();
+
+
+
+
+
+
+window.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+
+const playButton =
+document.getElementById(
+    "playBtn"
+);
+
+
+
+const passwordScreen =
+document.getElementById(
+    "passwordScreen"
+);
+
+
+
+playButton.onclick = ()=>{
+
+
+    document.getElementById(
+        "mainMenu"
+    )
+    .classList.add("hidden");
+
+
+    passwordScreen
+    .classList.remove("hidden");
+
+
+};
+
+
+
+
+
+document.getElementById(
+"passwordBtn"
+)
+.onclick = ()=>{
+
+
+    const input =
+    document.getElementById(
+        "passwordInput"
+    ).value;
+
+
+
+    if(input === "1611"){
+
+
+        gameStarted = true;
+
+
+        startGame();
+
+
+    }
+
+    else{
+
+
+        document.getElementById(
+            "passwordError"
+        ).innerText =
+        "Wrong password!";
+
+
+    }
+
+
+
+};
+
+
+
+});
