@@ -1,4 +1,3 @@
-
 let scene;
 
 let textureLoader = new THREE.TextureLoader();
@@ -9,10 +8,7 @@ let blocks = {};
 
 let diamonds = [];
 
-let terrain = {};
-
-const WORLD_SIZE = 100;
-
+const WORLD_SIZE = 70;
 
 
 function loadTextures(){
@@ -40,15 +36,11 @@ function loadTextures(){
 
 
     Object.values(textures).forEach(texture=>{
-
         texture.magFilter = THREE.NearestFilter;
         texture.minFilter = THREE.NearestFilter;
-
     });
 
 }
-
-
 
 
 
@@ -62,24 +54,21 @@ function createWorld(gameScene){
     scene.add(
         new THREE.AmbientLight(
             0xffffff,
-            0.7
+            0.8
         )
     );
 
 
-    let sun =
-        new THREE.DirectionalLight(
-            0xffffff,
-            1
-        );
-
-
-    sun.position.set(
-        30,
-        50,
-        20
+    let sun = new THREE.DirectionalLight(
+        0xffffff,
+        1
     );
 
+    sun.position.set(
+        20,
+        40,
+        20
+    );
 
     scene.add(sun);
 
@@ -87,12 +76,9 @@ function createWorld(gameScene){
 
     generateTerrain();
 
-
     generateTrees();
 
-
     generateCaves();
-
 
     generateDiamonds();
 
@@ -102,24 +88,19 @@ function createWorld(gameScene){
 
 
 
+function getTerrainHeight(x,z){
 
+    return Math.floor(
 
-function getHeight(x,z){
+        Math.sin(x * 0.12) * 2 +
 
-    let height =
+        Math.cos(z * 0.12) * 2 +
 
-        Math.sin(x * 0.08) * 5 +
+        Math.sin((x+z) * 0.05) * 3
 
-        Math.cos(z * 0.08) * 5 +
-
-        Math.sin((x+z) * 0.04) * 3;
-
-
-    return Math.floor(height);
+    );
 
 }
-
-
 
 
 
@@ -142,14 +123,10 @@ function generateTerrain(){
 
 
             let height =
-                getHeight(x,z);
+                getTerrainHeight(x,z);
 
 
-            terrain[`${x},${z}`] = height;
-
-
-
-            addGrass(
+            addGrassBlock(
                 x,
                 height,
                 z
@@ -164,9 +141,10 @@ function generateTerrain(){
             );
 
 
+
             for(
                 let y = height-2;
-                y >= height-12;
+                y >= height-10;
                 y--
             ){
 
@@ -179,7 +157,6 @@ function generateTerrain(){
 
             }
 
-
         }
 
     }
@@ -190,9 +167,7 @@ function generateTerrain(){
 
 
 
-
-
-function addGrass(x,y,z){
+function addGrassBlock(x,y,z){
 
 
     let materials = [
@@ -245,14 +220,14 @@ function addGrass(x,y,z){
     );
 
 
-    blocks[`${x},${y},${z}`] = block;
+    blocks[
+        ${x},${y},${z}
+    ] = block;
 
 
     scene.add(block);
 
 }
-
-
 
 
 
@@ -289,7 +264,9 @@ function addBlock(x,y,z,type){
     block.userData.type = type;
 
 
-    blocks[`${x},${y},${z}`] = block;
+    blocks[
+        ${x},${y},${z}
+    ] = block;
 
 
     scene.add(block);
@@ -301,33 +278,27 @@ function addBlock(x,y,z,type){
 
 
 
-
-
 function generateTrees(){
 
 
-    for(let x = -45; x < 45; x += 3){
+    for(let x = -30; x <= 30; x += 4){
 
-        for(let z = -45; z < 45; z += 3){
-
-
-            if(Math.random() > 0.82){
+        for(let z = -30; z <= 30; z += 4){
 
 
-                let height =
-                    terrain[`${x},${z}`];
+            if(Math.random() > 0.75){
 
 
-                if(height !== undefined){
+                let y =
+                    getTerrainHeight(x,z);
 
 
-                    createTree(
-                        x,
-                        height + 1,
-                        z
-                    );
+                createTree(
+                    x,
+                    y + 1,
+                    z
+                );
 
-                }
 
             }
 
@@ -346,12 +317,14 @@ function generateTrees(){
 function createTree(x,y,z){
 
 
-    let trunkHeight =
-        4 + Math.floor(Math.random()*3);
+    let height =
+        4 + Math.floor(Math.random()*2);
 
 
 
-    for(let i=0; i<trunkHeight; i++){
+    // wood trunk
+
+    for(let i = 0; i < height; i++){
 
 
         addBlock(
@@ -365,35 +338,44 @@ function createTree(x,y,z){
 
 
 
-    let leafLayers = [
+    // leaves
 
-        {y:5,r:1},
+    let leafShapes = [
 
-        {y:4,r:2},
+        {level:5, radius:1},
 
-        {y:3,r:3},
+        {level:4, radius:2},
 
-        {y:2,r:2}
+        {level:3, radius:2},
+
+        {level:2, radius:1}
 
     ];
 
 
 
-    leafLayers.forEach(layer=>{
+    leafShapes.forEach(shape=>{
 
 
-        for(let a=-layer.r; a<=layer.r; a++){
+        for(
+            let a=-shape.radius;
+            a<=shape.radius;
+            a++
+        ){
 
 
-            for(let b=-layer.r; b<=layer.r; b++){
+            for(
+                let b=-shape.radius;
+                b<=shape.radius;
+                b++
+            ){
 
 
-                if(Math.random()>0.15){
+                if(Math.random()>0.1){
 
 
                     let key =
-                    ${x+a},${y+layer.y},${z+b};
-
+                    ${x+a},${y+shape.level},${z+b};
 
 
                     if(!blocks[key]){
@@ -403,14 +385,13 @@ function createTree(x,y,z){
 
                             x+a,
 
-                            y+layer.y,
+                            y+shape.level,
 
                             z+b,
 
                             "leaves"
 
                         );
-
 
                     }
 
@@ -431,46 +412,32 @@ function createTree(x,y,z){
 
 
 
+
 function generateCaves(){
 
 
-    for(let i=0; i<60; i++){
+    for(let i=0; i<50; i++){
 
 
         let x =
-            Math.floor(
-                Math.random()*80
-            )-40;
+            Math.floor(Math.random()*60)-30;
 
 
         let z =
-            Math.floor(
-                Math.random()*80
-            )-40;
+            Math.floor(Math.random()*60)-30;
 
 
 
-        let height =
-            terrain[`${x},${z}`];
+        let y =
+            getTerrainHeight(x,z)-5;
 
 
 
-        if(height !== undefined){
-
-
-            let y =
-                height -
-                (5 + Math.floor(Math.random()*6));
-
-
-
-            carveCave(
-                x,
-                y,
-                z
-            );
-
-        }
+        carveCave(
+            x,
+            y,
+            z
+        );
 
 
     }
@@ -513,7 +480,6 @@ function carveCave(x,y,z){
 
                 }
 
-
             }
 
         }
@@ -526,30 +492,94 @@ function carveCave(x,y,z){
 
 
 
-
-
 function generateDiamonds(){
 
 
-    for(let i=0; i<30; i++){
+    for(let i = 0; i < 25; i++){
 
 
         let x =
             Math.floor(
-                Math.random()*80
-            )-40;
+                Math.random() * 60
+            ) - 30;
 
 
         let z =
             Math.floor(
-                Math.random()*80
-            )-40;
+                Math.random() * 60
+            ) - 30;
 
 
 
-        let height =
-            terrain[`${x},${z}`];
+        let y =
+            getTerrainHeight(x,z)
+            - (5 + Math.floor(Math.random()*5));
 
 
 
-        if(height !== undefined){
+        createDiamond(
+            x,
+            y,
+            z
+        );
+
+
+    }
+
+}
+
+
+
+
+
+
+
+function createDiamond(x,y,z){
+
+
+    let diamond =
+        new THREE.Mesh(
+
+
+            new THREE.BoxGeometry(
+                0.5,
+                0.5,
+                0.5
+            ),
+
+
+            new THREE.MeshLambertMaterial({
+
+                map:textures.diamond
+
+            })
+
+
+        );
+
+
+
+    diamond.position.set(
+        x,
+        y,
+        z
+    );
+
+
+
+    diamond.userData.isDiamond = true;
+
+
+
+    diamonds.push(
+        diamond
+    );
+
+
+
+    scene.add(
+        diamond
+    );
+
+
+}
