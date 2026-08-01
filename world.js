@@ -272,6 +272,225 @@ function addBlock(x,y,z,type){
     scene.add(block);
 
 }
+
+
+
+
+
+function generateTrees(){
+
+
+    for(let x = -30; x <= 30; x += 4){
+
+        for(let z = -30; z <= 30; z += 4){
+
+
+            if(Math.random() > 0.75){
+
+
+                let y =
+                    getTerrainHeight(x,z);
+
+
+                createTree(
+                    x,
+                    y + 1,
+                    z
+                );
+
+
+            }
+
+        }
+
+    }
+
+}
+
+
+
+
+
+
+
+function createTree(x,y,z){
+
+
+    let height =
+        4 + Math.floor(Math.random()*2);
+
+
+
+    // wood trunk
+
+    for(let i = 0; i < height; i++){
+
+
+        addBlock(
+            x,
+            y+i,
+            z,
+            "wood"
+        );
+
+    }
+
+
+
+    // leaves
+
+    let leafShapes = [
+
+        {level:5, radius:1},
+
+        {level:4, radius:2},
+
+        {level:3, radius:2},
+
+        {level:2, radius:1}
+
+    ];
+
+
+
+    leafShapes.forEach(shape=>{
+
+
+        for(
+            let a=-shape.radius;
+            a<=shape.radius;
+            a++
+        ){
+
+
+            for(
+                let b=-shape.radius;
+                b<=shape.radius;
+                b++
+            ){
+
+
+                if(Math.random()>0.1){
+
+
+                    let key =
+                    ${x+a},${y+shape.level},${z+b};
+
+
+                    if(!blocks[key]){
+
+
+                        addBlock(
+
+                            x+a,
+
+                            y+shape.level,
+
+                            z+b,
+
+                            "leaves"
+
+                        );
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+
+
+}
+
+
+
+
+
+
+
+
+function generateCaves(){
+
+
+    for(let i=0; i<50; i++){
+
+
+        let x =
+            Math.floor(Math.random()*60)-30;
+
+
+        let z =
+            Math.floor(Math.random()*60)-30;
+
+
+
+        let y =
+            getTerrainHeight(x,z)-5;
+
+
+
+        carveCave(
+            x,
+            y,
+            z
+        );
+
+
+    }
+
+}
+
+
+
+
+
+
+
+function carveCave(x,y,z){
+
+
+    for(let a=-2; a<=2; a++){
+
+
+        for(let b=-2; b<=2; b++){
+
+
+            for(let c=-2; c<=2; c++){
+
+
+                let key =
+                ${x+a},${y+b},${z+c};
+
+
+
+                if(blocks[key]){
+
+
+                    scene.remove(
+                        blocks[key]
+                    );
+
+
+                    delete blocks[key];
+
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
+
+
+
+
+
 function generateDiamonds(){
 
 
