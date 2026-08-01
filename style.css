@@ -201,3 +201,86 @@ p {
 
 
 }
+#passwordScreen h2 {
+    margin-bottom: 30px;
+}
+
+
+#passwordScreen input {
+    margin-bottom: 15px;
+}
+
+
+#hint {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+
+#passwordBtn {
+    margin-top: 10px;
+}
+
+
+
+#gameUI {
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:100%;
+
+    pointer-events:none;
+
+}
+
+
+
+#diamondCounter {
+
+
+    position:absolute;
+
+    top:30px;
+
+    left:30px;
+
+
+    background:#222;
+
+
+    color:white;
+
+
+    border:5px solid #555;
+
+
+    padding:15px;
+
+
+    font-size:18px;
+
+
+    font-family:"Press Start 2P", monospace;
+
+
+    text-shadow:3px 3px #000;
+
+
+}
+
+
+#achievementBox {
+
+    position:absolute;
+
+    top:30px;
+
+    right:30px;
+
+}
